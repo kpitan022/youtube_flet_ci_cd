@@ -1,0 +1,66 @@
+image:
+  - Ubuntu
+  - Visual Studio 2019
+  # - macOS
+
+skip_branch_with_pr: true
+stack: python 3.10
+
+environment:
+  GITHUB_TOKEN:
+    secure: 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
+
+install:
+  - pip install -r requirements.txt
+
+build_script:
+  - flet pack main.py --name youtube_flet_ci_cd --icon icon.png --product-name youtube_flet_ci_cd --product-version "1.2.3" --copyright "Copyright (c) 2022 KPITAN 22." --add-data "assets:assets"
+
+test: off
+
+# Publish artifacts to GitHub Releases on "tag" builds
+deploy:
+  provider: GitHub
+  auth_token: $(GITHUB_TOKEN)
+  on:
+    APPVEYOR_REPO_TAG: true
+
+for:
+  #
+  #   Linux package
+  #
+  - matrix:
+      only:
+        - image: Ubuntu
+
+    after_build:
+      - tar -czvf youtube_flet_ci_cd-linux.tar.gz -C dist youtube_flet_ci_cd
+
+    artifacts:
+      - path: youtube_flet_ci_cd-linux.tar.gz
+
+  #
+  #   Windows package
+  #
+  - matrix:
+      only:
+        - image: Visual Studio 2019
+
+    after_build:
+      - 7z a youtube_flet_ci_cd-windows.zip %CD%\dist\*.exe
+
+    artifacts:
+      - path: youtube_flet_ci_cd-windows.zip
+
+  # #
+  # #   macOS package
+  # #
+  # - matrix:
+  #     only:
+  #       - image: macOS
+
+  #   after_build:
+  #     - tar -czvf youtube_flet_ci_cd-macos.tar.gz -C dist youtube_flet_ci_cd.app
+
+  #   artifacts:
+  #     - path: youtube_flet_ci_cd-macos.tar.gz
