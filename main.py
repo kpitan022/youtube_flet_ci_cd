@@ -319,6 +319,12 @@ def main(page: ft.Page):
         drop_calidades.disabled = False
         drop_calidades.options = []
         drop_calidades.update()
+        drop_subtitulos.visible = False
+        drop_subtitulos.options = []
+        drop_subtitulos.update()
+        check_subtitulos.visible = False
+        check_subtitulos.disabled = True
+        check_subtitulos.update()
 
     # cuadro de ingreso de url del video a descargar
     input_text = ft.TextField(
@@ -365,7 +371,7 @@ def main(page: ft.Page):
     # contenedor para los botones
     button_container = ft.Container(
         width=body_width,
-        height=body_height * 0.2,
+        height=body_height * 0.3,
         # padding=10,
         border_radius=10,
         content=ft.Column(
@@ -391,11 +397,11 @@ def main(page: ft.Page):
     # contenedor para el cuadro de texto
     input_container = ft.Container(
         width=body_width * 1.4,
-        height=body_height * 0.1,
+        height=body_height * 0.2,
         # padding=10,
         border_radius=10,
         col=1,
-        padding=5,
+        # padding=2,
         content=ft.Row(
             [
                 input_text,
