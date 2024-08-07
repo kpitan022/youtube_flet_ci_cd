@@ -506,12 +506,11 @@ def main(page: ft.Page):
     )
 
 
-if __name__ == "__main__":
-    ft.app(
-        target=main,
-        # view=ft.WEB_BROWSER,
-        assets_dir="assets",
-        name="You Tube Downloader",
-        use_color_emoji=True,
-        route_url_strategy="path",
-    )
+ft.app(
+    target=main,
+    # # view=ft.WEB_BROWSER,
+    # assets_dir="assets",
+    # name="You Tube Downloader",
+    # use_color_emoji=True,
+    # route_url_strategy="path",
+)
