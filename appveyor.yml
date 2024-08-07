@@ -1,10 +1,6 @@
-image:
-  - Ubuntu
-  - Visual Studio 2019
-  # - macOS
+image: macos-monterey
 
 skip_branch_with_pr: true
-stack: python 3.10
 
 environment:
   PYTHON_STACK: python 3.10
