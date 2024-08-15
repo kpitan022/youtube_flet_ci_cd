@@ -14,7 +14,7 @@ install:
   - pip install -r requirements.txt
 
 build_script:
-  - flet pack main.py --name youtube_flet_ci_cd --icon icon.png --product-name youtube_flet_ci_cd --product-version "1.2.3" --copyright "Copyright (c) 2022 KPITAN 22." --add-data "assets:assets"
+  - flet pack main.py --name youtobedownload --icon icon.png --product-name youtobedownload --product-version "1.2.3" --copyright "Copyright (c) 2022 KPITAN 22." --add-data "assets:assets" --hidden-import=pkg_resources.py2_warn
 
 test: off
 
@@ -34,10 +34,10 @@ for:
         - image: Ubuntu
 
     after_build:
-      - tar -czvf youtube_flet_ci_cd-linux.tar.gz -C dist youtube_flet_ci_cd
+      - tar -czvf youtobedownload-linux.tar.gz -C dist youtobedownload
 
     artifacts:
-      - path: youtube_flet_ci_cd-linux.tar.gz
+      - path: youtobedownload-linux.tar.gz
 
   #
   #   Windows package
@@ -47,10 +47,10 @@ for:
         - image: Visual Studio 2019
 
     after_build:
-      - 7z a youtube_flet_ci_cd-windows.zip %CD%\dist\*.exe
+      - 7z a youtobedownload-windows.zip %CD%\dist\*.exe
 
     artifacts:
-      - path: youtube_flet_ci_cd-windows.zip
+      - path: youtobedownload-windows.zip
 
   # #
   # #   macOS package
@@ -60,7 +60,7 @@ for:
   #       - image: macOS
 
   #   after_build:
-  #     - tar -czvf youtube_flet_ci_cd-macos.tar.gz -C dist youtube_flet_ci_cd.app
+  #     - tar -czvf youtobedownload-macos.tar.gz -C dist youtobedownload.app
 
   #   artifacts:
-  #     - path: youtube_flet_ci_cd-macos.tar.gz
+  #     - path: youtobedownload-macos.tar.gz

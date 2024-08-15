@@ -2,6 +2,7 @@
 import os
 from pathlib import Path
 from shutil import rmtree
+import shutil
 import eyed3
 
 from moviepy.editor import AudioFileClip, CompositeAudioClip, VideoFileClip
@@ -219,7 +220,12 @@ def main(page: ft.Page):
             new_audioclip = audio.subclip(0)
             new_audioclip.write_audiofile(webm.with_suffix(".mp3"))
             # os.remove(webm)
-            os.rename(webm.with_suffix(".mp3"), path_videos / f"{titulo}.mp3")
+            # os.rename(webm.with_suffix(".mp3"), path_videos / f"{titulo}.mp3")
+            shutil.copy(webm.with_suffix(".mp3"), path_videos / f"{titulo}.mp3")
+            os.remove(
+                webm.with_suffix(".mp3")
+            )  # Eliminar el archivo original después de copiarlo
+
             audiofile = eyed3.load(path_videos / f"{titulo}.mp3")
             rmtree(path_temporal)
             try:
@@ -508,6 +514,7 @@ def main(page: ft.Page):
 
 ft.app(
     target=main,
+    assets_dir="assets",
     # # view=ft.WEB_BROWSER,
     # assets_dir="assets",
     # name="You Tube Downloader",
