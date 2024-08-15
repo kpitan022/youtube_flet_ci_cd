@@ -1,6 +1,6 @@
 image:
   - Ubuntu2204
-  - Visual Studio 2015
+  - Visual Studio 2017
   # - macOS
 
 skip_branch_with_pr: true
