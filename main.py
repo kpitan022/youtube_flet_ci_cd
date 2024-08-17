@@ -208,43 +208,10 @@ def main(page: ft.Page):
             path_temporal.mkdir(exist_ok=True)
             cuadro_imagen.src = spinner
             cuadro_imagen.update()
-            # obtener el stream del audio
-            stream = (
-                yt.streams.get_audio_only(subtype="webm")
-                # .download(output_path=path_videos, filename="mp3tmp")
-                # -----audio con moviepy
-                .download(output_path=path_temporal, filename="tmp.webm")
+            yt.streams.get_audio_only().download(
+                output_path=path_videos, mp3=True, filename=f"{titulo}"
             )
-            webm = path_temporal / "tmp.webm"
-            audio = AudioFileClip(str(webm))
-            new_audioclip = audio.subclip(0)
-            new_audioclip.write_audiofile(webm.with_suffix(".mp3"))
-            # os.remove(webm)
-            # os.rename(webm.with_suffix(".mp3"), path_videos / f"{titulo}.mp3")
-            shutil.copy(webm.with_suffix(".mp3"), path_videos / f"{titulo}.mp3")
-            os.remove(
-                webm.with_suffix(".mp3")
-            )  # Eliminar el archivo original después de copiarlo
 
-            audiofile = eyed3.load(path_videos / f"{titulo}.mp3")
-            rmtree(path_temporal)
-            try:
-                # print(yt.metadata[0]['Artist'])
-                audiofile.tag.artist = yt.metadata[0]["Artist"]
-                audiofile.tag.save()
-            except Exception as e:
-                print(f"No se pudo guardar el artista: {e}")
-
-            try:
-                audiofile.tag.title = yt.metadata[0]["Song"]
-                audiofile.tag.save()
-            except Exception as e:
-                print(f"No se pudo guardar el titulo: {e}")
-            try:
-                audiofile.tag.album = yt.metadata[0]["Album"]
-                audiofile.tag.save()
-            except Exception as e:
-                print(f"No se pudo guardar el album: {e}")
         else:
             print(f"entro donde no debia")
             scriptPath = Path(__file__).parent
