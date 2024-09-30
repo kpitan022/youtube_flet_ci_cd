@@ -9,17 +9,12 @@ stack: python 3.10
 environment:
   GITHUB_TOKEN:
     secure: U80gjU6H6Q+i8PFZmjUfgw/GsIoV1vu0RuwaBGZ3pOMQYKNMmWZAexNN4lUzgLsY
-    name: "You To Be Download"
-    product_name: "You To Be Download"
-    version: "1.1.0"
-    copyright: "Copyright (c) 2024 KPITAN022."
-    package_name: "youtobedownload"
 
 install:
   - pip install -r requirements.txt
 
 build_script:
-  - flet pack main.py --name $(name) --icon icon.png --product-name $(product_name) --product-version $(version) --copyright $(copyright) --add-data "assets:assets" --hidden-import=pkg_resources.py2_warn
+  - flet pack main.py --name "You To Be Download" --icon icon.png --product-name "You To Be Download" --product-version "1.3.3" --copyright "Copyright (c) 2024 KPITAN022." --add-data "assets:assets" --hidden-import=pkg_resources.py2_warn
 
 test: off
 
@@ -39,10 +34,10 @@ for:
         - image: Ubuntu2204
 
     after_build:
-      - tar -czvf $(package_name)-linux.tar.gz -C dist $(name)
+      - tar -czvf youtobedownload-linux.tar.gz -C dist "You To Be Download"
 
     artifacts:
-      - path: $(package_name)-linux.tar.gz
+      - path: youtobedownload-linux.tar.gz
 
   #
   #   Windows package
@@ -52,10 +47,10 @@ for:
         - image: Visual Studio 2022
 
     after_build:
-      - 7z a $(package_name)-windows.zip %CD%\dist\*.exe
+      - 7z a youtobedownload-windows.zip %CD%\dist\*.exe
 
     artifacts:
-      - path: $(package_name)-windows.zip
+      - path: youtobedownload-windows.zip
 
   # #
   # #   macOS package
@@ -65,7 +60,7 @@ for:
   #       - image: macOS
 
   #   after_build:
-  #     - tar -czvf $(package_name)-macos.tar.gz -C dist $(package_name).app
+  #     - tar -czvf youtobedownload-macos.tar.gz -C dist youtobedownload.app
 
   #   artifacts:
-  #     - path: $(package_name)-macos.tar.gz
+  #     - path: youtobedownload-macos.tar.gz
