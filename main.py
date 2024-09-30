@@ -1,9 +1,6 @@
 #!./venv/bin/python
 import os
 from pathlib import Path
-from shutil import rmtree
-import shutil
-import eyed3
 
 from moviepy.editor import AudioFileClip, CompositeAudioClip, VideoFileClip
 
@@ -203,9 +200,12 @@ def main(page: ft.Page):
         elif resolucion == "mp3":
             scriptPath = Path(__file__).parent
             path_videos = Path(path_videos)
-            path_temporal = scriptPath / "temporal"
+            # path_temporal = scriptPath / "temporal"
+            # path_temporal = scriptPath.joinpath("temporal")
+            path_temporal = path_videos
+
             #  / "temporal"
-            path_temporal.mkdir(exist_ok=True)
+            # path_temporal.mkdir(exist_ok=True)
             cuadro_imagen.src = spinner
             cuadro_imagen.update()
             yt.streams.get_audio_only().download(
@@ -216,34 +216,39 @@ def main(page: ft.Page):
             print(f"entro donde no debia")
             scriptPath = Path(__file__).parent
             path_videos = Path(path_videos)
-            path_temporal = scriptPath / "temporal"
+            # path_temporal = scriptPath / "temporal"
+            # path_temporal = scriptPath.joinpath("temporal")
+            path_temporal = path_videos
             # path_videos = Path(path_videos)
             # path_temporal = path_videos/ "temporal"
             #  / "temporal"
-            path_temporal.mkdir(exist_ok=True)
+            # path_temporal.mkdir(exist_ok=True)
             print(path_videos)
             print(path_temporal)
             # obtener el stream del video
-            # yt.streams.get_by_itag(dict_res[resolucion]).download(output_path=path_temporal, filename="tmp.mp4")
+            # yt.streams.get_by_itag(dict_res[resolucion]).download(output_path=path_temporal, filename=".tmp.mp4")
             yt.streams.filter(adaptive=True, type="video", subtype="mp4").get_by_itag(
                 dict_res[resolucion]
-            ).download(output_path=path_temporal, filename="tmp.mp4")
+            ).download(output_path=path_temporal, filename=".tmp.mp4")
             cuadro_imagen.src = spinner
             cuadro_imagen.update()
             # obtener el stream del audio
             yt.streams.get_audio_only().download(
-                output_path=path_temporal, filename="tmp.webm"
+                output_path=path_temporal, filename=".tmp.webm"
             )
             # unir el video y el audio
 
-            path_video_sa = path_temporal / "tmp.mp4"
+            # path_video_sa = path_temporal / ".tmp.mp4"
+            path_video_sa = path_temporal.joinpath(".tmp.mp4")
             video_sa = VideoFileClip(str(path_video_sa))
-            path_audio_sa = path_temporal / "tmp.webm"
+            # path_audio_sa = path_temporal / ".tmp.webm"
+            path_audio_sa = path_temporal.joinpath(".tmp.webm")
             audio_sv = AudioFileClip(str(path_audio_sa))
             # video = video.set_audio(audio)
             nuevo_audio = CompositeAudioClip([audio_sv])
             video_sa.audio = nuevo_audio
-            path_video = path_videos / f"{titulo}.mp4"
+            # path_video = path_videos / f"{titulo}.mp4"
+            path_video = path_videos.joinpath(f"{titulo}.mp4")
             print(path_video)
             video_sa.write_videofile(str(path_video))
             audio_sv.close()
@@ -251,7 +256,11 @@ def main(page: ft.Page):
             nuevo_audio.close()
 
             # borrar la carpeta temporal con el video y el audio
-            rmtree(path_temporal)
+            # rmtree(path_temporal)
+            # eliminar el video y el audio
+            path_video_sa.unlink()
+            path_audio_sa.unlink()
+
         # finally:
         # si se descargo algun video y se selecciono el checkbox de subtitulos se descargan los subtitulos
         if check_subtitulos.value:
@@ -297,6 +306,7 @@ def main(page: ft.Page):
         drop_subtitulos.update()
         check_subtitulos.visible = False
         check_subtitulos.disabled = True
+        check_subtitulos.value = False
         check_subtitulos.update()
 
     # cuadro de ingreso de url del video a descargar
