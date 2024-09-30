@@ -1,5 +1,6 @@
 image:
   - Ubuntu2204
+  - Ubuntu2004
   - Visual Studio 2022
   # - macOS
 
@@ -34,10 +35,21 @@ for:
         - image: Ubuntu2204
 
     after_build:
-      - tar -czvf youtobedownload-linux.tar.gz -C dist "You To Be Download"
+      - tar -czvf youtobedownload-linux-Ubuntu2204.tar.gz -C dist "You To Be Download"
 
     artifacts:
-      - path: youtobedownload-linux.tar.gz
+      - path: youtobedownload-linux-Ubuntu2204.tar.gz
+
+  # linux package for Ubuntu 20.04
+  - matrix:
+      only:
+        - image: Ubuntu2004
+
+    after_build:
+      - tar -czvf youtobedownload-linux-Ubuntu2004.tar.gz -C dist "You To Be Download"
+
+    artifacts:
+      - path: youtobedownload-linux-Ubuntu2004.tar.gz
 
   #
   #   Windows package
