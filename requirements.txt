@@ -1,6 +1,6 @@
 flet==0.23.2
 pyinstaller==6.10.0
-pytubefix==7.0.0
+pytubefix==7.2.2
 Pillow==10.4.0
 eyed3==0.9.7
 moviepy==1.0.3
